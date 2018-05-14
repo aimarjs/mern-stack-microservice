@@ -15,4 +15,9 @@
 ### MongoDB server desired state
 - Ubuntu
 - MongoDB
-- Accessible only from Nodejs server 
+- Accessible only from Nodejs server
+
+### Jenkins server
+- Ubuntu
+- Jenkins
+- Some test frameworks (not sure yet) 
