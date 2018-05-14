@@ -1,9 +1,9 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+NGINX server running on Ubuntu 16.04 with Let's Encrypt SSL
 
-Requirements
+<!-- Requirements
 ------------
 
 Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
@@ -35,4 +35,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+An optional section for the role authors to include contact information, or a website (HTML is not allowed). -->
