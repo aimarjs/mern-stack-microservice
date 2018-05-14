@@ -1,5 +1,7 @@
 # MERN stack as microservice
-## MongoDB, Express, Reactjs, Nodejs
+## MongoDB|Express|Reactjs|Nodejs
+
+Microservice environment to run reactjs web application in one server, nodejs express API in another server and mongodb as database supporting API. Environment also has Jenkins for continues integration and continues deployment.
 
 ### Webserver desired state
 - Ubuntu
@@ -20,4 +22,4 @@
 ### Jenkins server
 - Ubuntu
 - Jenkins
-- Some test frameworks (not sure yet) 
+- Some test frameworks (not sure yet)
