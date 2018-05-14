@@ -1,0 +1,101 @@
+{
+    "Outputs": {
+        "InstanceAccess": {
+            "Description": "Command to use to access the instance by SSH",
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [
+                        "ssh -i ~/.ssh/MernKey.pem ubuntu@",
+                        {
+                            "Fn::GetAtt": [
+                                "Webserver",
+                                "PublicDnsName"
+                            ]
+                        }
+                    ]
+                ]
+            }
+        },
+        "WebURL": {
+            "Description": "URL of web server",
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [
+                        "http://",
+                        {
+                            "Fn::GetAtt": [
+                                "Webserver",
+                                "PublicDnsName"
+                            ]
+                        }
+                    ]
+                ]
+            }
+        }
+    },
+    "Parameters": {
+        "KeyName": {
+            "Description": "Name of the SSH key pair that will be used to access the instance",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "MernSg": {
+            "Properties": {
+                "GroupDescription": "Allow access to ports 80, 443 and 22 to the web server",
+                "SecurityGroupIngress": [
+                    {
+                        "CidrIp": "0.0.0.0/0",
+                        "FromPort": "22",
+                        "IpProtocol": "tcp",
+                        "ToPort": "22"
+                    },
+                    {
+                        "CidrIp": "0.0.0.0/0",
+                        "FromPort": "80",
+                        "IpProtocol": "tcp",
+                        "ToPort": "80"
+                    },
+                    {
+                        "CidrIp": "0.0.0.0/0",
+                        "FromPort": "443",
+                        "IpProtocol": "tcp",
+                        "ToPort": "443"
+                    }
+                ]
+            },
+            "Type": "AWS::EC2::SecurityGroup"
+        },
+        "Webserver": {
+            "Properties": {
+                "ImageId": "ami-f90a4880",
+                "InstanceType": "t2.micro",
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "SecurityGroups": [
+                    {
+                        "Ref": "MernSg"
+                    }
+                ],
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "\n",
+                            [
+                                "#!/bin/bash",
+                                "sudo apt-get update",
+                                "sudo apt-get upgrade -y",
+                                "sudo apt-get install -y python-minimal",
+                                "sudo reboot"
+                            ]
+                        ]
+                    }
+                }
+            },
+            "Type": "AWS::EC2::Instance"
+        }
+    }
+}

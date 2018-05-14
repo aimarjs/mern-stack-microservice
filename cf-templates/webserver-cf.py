@@ -23,13 +23,23 @@ instance.ImageId = "ami-f90a4880"
 instance.InstanceType = "t2.micro"
 instance.SecurityGroups = [Ref(sg)]
 instance.KeyName = Ref(keypair)
+ud = Base64(Join("\n",
+    [
+        "#!/bin/bash",
+        "sudo apt-get update",
+        "sudo apt-get upgrade -y",
+        "sudo apt-get install -y python-minimal",
+        "sudo reboot"
+    ]))
+
+instance.UserData = ud
 
 t.add_resource(instance)
 
 t.add_output(Output(
     "InstanceAccess",
     Description = "Command to use to access the instance by SSH",
-    Value = Join("", ["ssh -i ~/.ssh/LampKey.pem ubuntu@", GetAtt(instance, "PublicDnsName")])
+    Value = Join("", ["ssh -i ~/.ssh/MernKey.pem ubuntu@", GetAtt(instance, "PublicDnsName")])
 ))
 t.add_output(Output(
     "WebURL",
