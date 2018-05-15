@@ -1,5 +1,6 @@
 ---
-- hosts: mernstack
+- hosts: staging
   become: yes
   roles:
     - nginx
+    - codedeploy

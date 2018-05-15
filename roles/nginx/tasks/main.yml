@@ -19,10 +19,17 @@
     src: templates/nginx.conf.j2
     dest: /etc/nginx/nginx.conf
 
-- name: Install nginx site for letsencrypt requests
+- name: Install nginx website for letsencrypt requests
   template:
     src: templates/nginx-http.j2
     dest: /etc/nginx/sites-enabled/http
+  # when: "'webserver' in group_names"
+
+# - name: Install nginx node site for letsencrypt requests
+#   template:
+#     src: templates/nginx-node.j2
+#     dest: /etc/nginx/sites-enabled/http
+#   when: "'backend' in group_names"
 
 - name: Reload nginx to activate letsencrypt site
   service: name=nginx state=restarted
@@ -45,10 +52,10 @@
 - name: create public web directory
   file: name=/var/www/{{ domain_name }} state=directory
 
-- name: Install temporary index.html
+- name: Install temporary startpage.html
   template:
     src: templates/index-html.j2
-    dest: /var/www/{{ domain_name }}/index.html
+    dest: /var/www/{{ domain_name }}/startpage.html
 
 - name: Reload nginx to activate specified site
   service: name=nginx state=restarted

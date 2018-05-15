@@ -1,0 +1,15 @@
+---
+- name: Download the installer package
+  get_url:
+    url: https://aws-codedeploy-eu-west-1.s3.amazonaws.com/latest/install
+    dest: /tmp/codedeploy_agent_install
+    mode: 0755
+
+- name: Install codedeploy agent
+  command: /tmp/codedeploy_agent_install auto
+
+- name: Start the service and ensure that it is running after system boot
+  service:
+    name: codedeploy-agent
+    state: started
+    enabled: yes

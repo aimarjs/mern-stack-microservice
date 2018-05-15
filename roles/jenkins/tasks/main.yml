@@ -1,0 +1,35 @@
+---
+- name: Import GPG key
+  apt_key:
+    state: present
+    url: http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
+
+- name: Create jenkins repository
+  apt_repository:
+    repo: deb http://pkg.jenkins-ci.org/debian binary/
+    state: present
+    update_cache: yes
+
+# - name: Install Java 8
+#   apt:
+#     name: java-1.8.0-openjdk.x86_64
+#     state: present
+
+- name: Install Git
+  apt:
+    name: git
+    state: present
+
+# - name: Set Java 8 as default
+#   command: /usr/sbin/alternatives --set java /usr/lib/jvm/jre-1.8.0-openjdk.x86_64/bin/java
+
+- name: Install Jenkins
+  apt:
+    name: jenkins
+    state: present
+
+- name: Start the Jenkins service and enable it on restart
+  service:
+    name: jenkins
+    state: started
+    enabled: yes

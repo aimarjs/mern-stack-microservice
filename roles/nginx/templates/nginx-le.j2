@@ -27,7 +27,7 @@ server {
     ssl_prefer_server_ciphers on;
 
     root /var/www/{{ domain_name }};
-    index index.html index.htm;
+    index index.html startpage.html;
 
     location / {
         try_files $uri $uri/ =404;
